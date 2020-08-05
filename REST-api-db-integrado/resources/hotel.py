@@ -1,29 +1,30 @@
 from flask_restful import Resource, reqparse
 from models.hotel import HotelModel
+from flask_jwt_extended import jwt_required
 
-hotels = [
-  {
-    'hotel_id': '1',
-    'nome': 'Alpha hotel',
-    'estrelas': 4.9,
-    'diaria': 450.36,
-    'cidade': 'Jeri'
-  },
-  {
-    'hotel_id': '2',
-    'nome': 'Beta hotel',
-    'estrelas': 4.2,
-    'diaria': 500.36,
-    'cidade': 'Guaramiranga'
-  },
-  {
-    'hotel_id': '3',
-    'nome': 'Bruna hotel',
-    'estrelas': 2.1,
-    'diaria': 150.66,
-    'cidade': 'Fortaleza'
-  }
-]
+# hotels = [
+#   {
+#     'hotel_id': '1',
+#     'nome': 'Alpha hotel',
+#     'estrelas': 4.9,
+#     'diaria': 450.36,
+#     'cidade': 'Jeri'
+#   },
+#   {
+#     'hotel_id': '2',
+#     'nome': 'Beta hotel',
+#     'estrelas': 4.2,
+#     'diaria': 500.36,
+#     'cidade': 'Guaramiranga'
+#   },
+#   {
+#     'hotel_id': '3',
+#     'nome': 'Bruna hotel',
+#     'estrelas': 2.1,
+#     'diaria': 150.66,
+#     'cidade': 'Fortaleza'
+#   }
+# ]
 
 class Hotels(Resource):
   def get(self):
@@ -49,6 +50,8 @@ class Hotel(Resource):
       return hotel.json(), 200
     return {'message':'Hotel Not Found.'}, 404
 
+  ## o decorador a seguir garante que o post requer o login para ser feito
+  @jwt_required
   def post(self,hotel_id):
     if HotelModel.find_hotel(hotel_id):
       return {"message": "Hotel id '{}' already exists.".format(hotel_id)}, 400 # bad request
@@ -67,7 +70,7 @@ class Hotel(Resource):
 
     # hoteis.append(new_hotel)
     
-
+  @jwt_required
   def put(self,hotel_id):
     data = Hotel.args1.parse_args()  
 
@@ -90,6 +93,7 @@ class Hotel(Resource):
     
     return hotel.json(), 201
 
+  @jwt_required
   def delete(self,hotel_id):
     hotel = HotelModel.find_hotel(hotel_id)
     if hotel:
@@ -104,10 +108,11 @@ class Hotel(Resource):
 ### alguns comandos
 '''
  ### POST: 
- curl --header "Content-Type: application/json" \
+curl -H "Content-Type: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTY1NjI3MTksIm5iZiI6MTU5NjU2MjcxOSwianRpIjoiYjgwMjY0MGYtZDA1ZS00OTA0LWFkZWUtYTU2OTljZWIwYzIxIiwiZXhwIjoxNTk2NTYzNjE5LCJpZGVudGl0eSI6MiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIn0.6_uSEe9hf3CSpKG01SL4yEgH2uaXkyveoOicfkSw_qY"\
     --request POST \
     --data '{"name":"xyz","stars":2.6,"price":180.50,"city":"Fortaleza"}' \
     http://localhost:5000/hotels/4
+
 
   ### PUT:
    curl --header "Content-Type: application/json" \
