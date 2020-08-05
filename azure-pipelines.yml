@@ -31,6 +31,6 @@ steps:
   displayName: 'Install dependencies'
 
 - script: |
-    pip install pytest pytest-azurepipelines
-    python -m pytest REST-api-db-integrado/app.py
-  displayName: 'pytest'
+    # pip install pytest pytest-azurepipelines
+    python REST-api-db-integrado/app.py
+  displayName: 'running app.py'
