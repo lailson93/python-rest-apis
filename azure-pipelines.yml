@@ -32,5 +32,5 @@ steps:
 
 - script: |
     pip install pytest pytest-azurepipelines
-    python -m pytest lailson93/python-rest-apis/REST-api-db-integrado/app.py
+    python -m pytest REST-api-db-integrado/app.py
   displayName: 'pytest'
