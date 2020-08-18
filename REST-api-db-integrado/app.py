@@ -5,40 +5,54 @@ from resources.user import User, UserRegister, UserLogin, UserLogout
 from flask_jwt_extended import JWTManager
 from blacklist import BLACKLIST
 
+from sql_alchemy import database1
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database1.db' ## it create a db of type sqlite
+app.config[
+    'SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database1.db'  ## it create a db of type sqlite
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'CHAVEGARANTECRIPTOGRAFIA'
 app.config['JWT_BLACKLIST_ENABLED'] = True
 
+database1.init_app(app)
+
 api = Api(app)
 jwt = JWTManager(app)
 
+
 @app.before_first_request
 def create_db():
-  database1.create_all()
+    database1.create_all()
+
 
 @jwt.token_in_blacklist_loader
 def verify_blacklist(token):
-  return token['jti'] in BLACKLIST
+    return token['jti'] in BLACKLIST
+
 
 ## acesso revogado
 @jwt.revoked_token_loader
 def token_access_invalid():
-  return jsonify({'message':'You have been logged out'}), 401 # unauthorized
+    return jsonify({'message':
+                    'You have been logged out'}), 401  # unauthorized
 
-## criando recurso que se extende por hoteis 
+
+## criando recurso que se extende por hoteis
 ## http://127.0.0.1:5000/hoteis
 api.add_resource(Hotels, '/hotels')
 api.add_resource(Hotel, '/hotels/<string:hotel_id>')
-api.add_resource(User,'/users/<int:user_id>')
+api.add_resource(User, '/users/<int:user_id>')
 api.add_resource(UserRegister, '/signup')
-api.add_resource(UserLogin,'/login')
-api.add_resource(UserLogout,'/logout')
+api.add_resource(UserLogin, '/login')
+api.add_resource(UserLogout, '/logout')
 
-if __name__ == '__main__':
-  from sql_alchemy import database1
-  database1.init_app(app)
+### a parte abaixo esta comentada pois a execucao em servidor é feita de outra forma
+## atravez do export FLASK_APP= app.py
+### flask run --host 0.0.0.0
+### dessa forma nao é mais necessario executar o python app.py para iniciar a api
 
-  app.run(debug=True)
+# if __name__ == '__main__':
+#   from sql_alchemy import database1
+#   database1.init_app(app)
+
+#   app.run(debug=True)
