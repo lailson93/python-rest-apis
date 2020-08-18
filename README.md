@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/lailson93/Azevedo/_apis/build/status/lailson93.python-sample-vscode-flask-tutorial?branchName=master)](https://dev.azure.com/lailson93/Azevedo/_build/latest?definitionId=1&branchName=master)
+
 # python-rest-apis
 Repositório voltado para estudos com REST APIs para Python
 
