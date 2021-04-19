@@ -13,41 +13,41 @@ jobs:
         name: Test step
 
   ### dev jobs
-  build-job:
-    name: "Build Job"
+  build-job-dev:
+    name: "Build Job [DEV]"
     runs-on: ubuntu-latest
     needs: test-job
     steps:
       - run: |
-          echo "Buid step"
+          echo "Buid step [DEV]"
         shell: bash
-        name: Build step
+        name: Build step [DEV]
 
-  migrate-job:
-    name: "Migrate Job"
+  migrate-job-dev:
+    name: "Migrate Job [DEV]"
     runs-on: ubuntu-latest
-    needs: [build-job, test-job]
+    needs: [build-job-dev, test-job-dev]
     steps:
       - run: |
-          echo "Migrate step"
+          echo "Migrate step [DEV]"
         shell: bash
-        name: Migrate step
+        name: Migrate step [DEV]
 
-  deploy-job:
-    name: "Deployment Job"
+  deploy-job-dev:
+    name: "Deployment Job [DEV]"
     runs-on: ubuntu-latest
-    needs: [build-job, migrate-job]
+    needs: [build-job-dev, migrate-job-dev]
     steps:
       - run: |
-          echo "Deploy step"
+          echo "Deploy step [DEV]"
         shell: bash
-        name: Deploy step
+        name: Deploy step [DEV]
 
   ### stage jobs
   init-stage-job:
     name: "Init stage Job"
     runs-on: ubuntu-latest
-    needs: build-job
+    needs: build-job-dev
     environment:
       name: hml
     steps:
