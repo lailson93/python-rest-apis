@@ -1,0 +1,43 @@
+name: Actions Complete Demo
+on:
+  workflow_dispatch:
+
+jobs:
+  test-job:
+    name: "Test Job"
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Test step"
+        shell: bash
+        name: Test step
+
+  build-job:
+    name: "Build Job"
+    runs-on: ubuntu-latest
+    needs: test-job
+    steps:
+      - run: |
+          echo "Buid step"
+        shell: bash
+        name: Build step
+
+  migrate-job:
+    name: "Migrate Job"
+    runs-on: ubuntu-latest
+    needs: [build-job, test-job]
+    steps:
+      - run: |
+          echo "Migrate step"
+        shell: bash
+        name: Migrate step
+
+  deploy-job:
+    name: "Deployment Job"
+    runs-on: ubuntu-latest
+    needs: [build-job, migrate-job]
+    steps:
+      - run: |
+          echo "Deploy step"
+        shell: bash
+        name: Deploy step
