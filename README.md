@@ -36,3 +36,7 @@ conda env export > env.yml
 #For other person to use the environment
 conda env create -f env.yml
 ```
+
+References
+
+udemy course: https://www.udemy.com/course/rest-apis-com-python-e-flask/
