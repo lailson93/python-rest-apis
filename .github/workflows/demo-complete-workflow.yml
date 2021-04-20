@@ -18,10 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: test-job
     steps:
-      - run: |
-          echo "Buid step [DEV]"
-        shell: bash
-        name: Build step [DEV]
+      - name: Build step [DEV]
+        uses: ./.github/actions/build
+        with:
+          var_env: dev
 
   migrate-job-dev:
     name: "Migrate Job [DEV]"
