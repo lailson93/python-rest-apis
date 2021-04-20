@@ -1,5 +1,5 @@
-name: "${{inputs.var_job}} template"
-description: "${{inputs.var_job}} template"
+name: "Commons template"
+description: "Commons template"
 inputs:
   var_env:
     description: "Env variable"
