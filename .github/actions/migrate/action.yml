@@ -7,6 +7,8 @@ inputs:
     default: "dev"
 runs:
   steps:
+    - name: Check out repository code
+      uses: actions/checkout@v2
     - name: Migrate step
       uses: ./.github/actions/commons
       with:
