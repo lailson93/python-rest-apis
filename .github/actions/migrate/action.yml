@@ -1,0 +1,14 @@
+name: "Migrate template"
+description: "Migrate template"
+inputs:
+  var_env:
+    description: "Env variable"
+    required: true
+    default: "dev"
+runs:
+  steps:
+    - name: Migrate step
+      uses: ./.github/actions/commons
+      with:
+        var_env: ${{inputs.var_env}}
+        var_job: migrate_

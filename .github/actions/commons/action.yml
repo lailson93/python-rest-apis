@@ -1,0 +1,17 @@
+name: "${{inputs.var_job}} template"
+description: "${{inputs.var_job}} template"
+inputs:
+  var_env:
+    description: "Env variable"
+    required: true
+    default: "dev"
+  var_job:
+    description: "Actual Job"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        ${{ github.action_path }}/script.sh ${{inputs.var_job}} ${{inputs.var_env}}
+      shell: bash
+      name: ${{inputs.var_job}} step [${{inputs.var_env}}]

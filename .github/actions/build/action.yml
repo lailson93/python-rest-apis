@@ -1,0 +1,14 @@
+name: "Build template"
+description: "Build template"
+inputs:
+  var_env:
+    description: "Env variable"
+    required: true
+    default: "dev"
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        ${{ github.action_path }}/script.sh ${{inputs.var_env}}
+      shell: bash
+      name: Build step [${{inputs.var_env}}]

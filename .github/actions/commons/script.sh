@@ -1,0 +1,1 @@
+echo "$1 step from action script. Your env is $2"
