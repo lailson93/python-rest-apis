@@ -30,10 +30,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-job-dev, test-job]
     steps:
-      - run: |
-          echo "Migrate step [DEV]"
-        shell: bash
-        name: Migrate step [DEV]
+      - name: Migrate step [DEV]
+        uses: ./.github/actions/migrate
+        with:
+          var_env: dev
 
   deploy-job-dev:
     name: "Deployment Job [DEV]"
