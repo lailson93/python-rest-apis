@@ -33,9 +33,10 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Migrate step [DEV]
-        uses: ./.github/actions/migrate
+        uses: ./.github/actions/commons
         with:
           var_env: dev
+          var_job: migrate
 
   deploy-job-dev:
     name: "Deployment Job [DEV]"
