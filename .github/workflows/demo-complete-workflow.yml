@@ -2,6 +2,9 @@ name: Actions Complete Demo
 on:
   workflow_dispatch:
 
+env:
+  test_flag: false
+
 jobs:
   test-job:
     name: "Test Job"
@@ -11,6 +14,7 @@ jobs:
           echo "Test step"
         shell: bash
         name: Test step
+        if: ${{ test_flag == 'true' }}
 
   ### dev jobs
   build-job-dev:
